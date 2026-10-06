@@ -1,8 +1,7 @@
 // !$*UTF8*$!
 {
 	archiveVersion = 1;
-	classes = {
-	};
+	classes = {};
 	objectVersion = 55;
 	objects = {
 
@@ -13,6 +12,10 @@
 		A10000000000000000000004 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004 /* ImagesListCell.swift */; };
 		A10000000000000000000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000005 /* Assets.xcassets */; };
 		A10000000000000000000006 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000001 /* LaunchScreen.storyboard */; };
+		A10000000000000000000007 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000002 /* Main.storyboard */; };
+		A10000000000000000000008 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000010 /* ProfileViewController.swift */; };
+		A10000000000000000000009 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000011 /* SingleImageViewController.swift */; };
+		A1000000000000000000000A /* ImageFeedTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000012 /* ImageFeedTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,14 +27,17 @@
 		A20000000000000000000006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A20000000000000000000007 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20000000000000000000008 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A20000000000000000000009 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A20000000000000000000010 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		A20000000000000000000011 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		A20000000000000000000012 /* ImageFeedTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A40000000000000000000001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
-			files = (
-			);
+			files = ();
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -51,6 +57,9 @@
 				A20000000000000000000001 /* AppDelegate.swift */,
 				A20000000000000000000002 /* SceneDelegate.swift */,
 				A50000000000000000000003 /* ImagesList */,
+				A50000000000000000000006 /* Profile */,
+				A50000000000000000000007 /* SingleImage */,
+				A50000000000000000000008 /* TabBar */,
 				A50000000000000000000004 /* Resources */,
 			);
 			path = ImageFeed;
@@ -69,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				A30000000000000000000001 /* LaunchScreen.storyboard */,
+				A30000000000000000000002 /* Main.storyboard */,
 				A20000000000000000000005 /* Assets.xcassets */,
 				A20000000000000000000006 /* Info.plist */,
 			);
@@ -83,6 +93,30 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A50000000000000000000006 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000010 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		A50000000000000000000007 /* SingleImage */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000011 /* SingleImageViewController.swift */,
+			);
+			path = SingleImage;
+			sourceTree = "<group>";
+		};
+		A50000000000000000000008 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000012 /* ImageFeedTabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -94,10 +128,8 @@
 				A40000000000000000000001 /* Frameworks */,
 				A40000000000000000000003 /* Resources */,
 			);
-			buildRules = (
-			);
-			dependencies = (
-			);
+			buildRules = ();
+			dependencies = ();
 			name = ImageFeed;
 			productName = ImageFeed;
 			productReference = A20000000000000000000007 /* ImageFeed.app */;
@@ -113,26 +145,19 @@
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					A60000000000000000000001 = {
-						CreatedOnToolsVersion = 16.0;
-					};
+					A60000000000000000000001 = { CreatedOnToolsVersion = 16.0; };
 				};
 			};
 			buildConfigurationList = A70000000000000000000001 /* Build configuration list for PBXProject "ImageFeed" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-			);
+			knownRegions = (en, Base);
 			mainGroup = A50000000000000000000001;
 			productRefGroup = A50000000000000000000005 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
-			targets = (
-				A60000000000000000000001 /* ImageFeed */,
-			);
+			targets = (A60000000000000000000001 /* ImageFeed */);
 		};
 /* End PBXProject section */
 
@@ -143,6 +168,7 @@
 			files = (
 				A10000000000000000000005 /* Assets.xcassets in Resources */,
 				A10000000000000000000006 /* LaunchScreen.storyboard in Resources */,
+				A10000000000000000000007 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,6 +183,9 @@
 				A10000000000000000000002 /* SceneDelegate.swift in Sources */,
 				A10000000000000000000003 /* ImagesListViewController.swift in Sources */,
 				A10000000000000000000004 /* ImagesListCell.swift in Sources */,
+				A10000000000000000000008 /* ProfileViewController.swift in Sources */,
+				A10000000000000000000009 /* SingleImageViewController.swift in Sources */,
+				A1000000000000000000000A /* ImageFeedTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,10 +194,14 @@
 /* Begin PBXVariantGroup section */
 		A30000000000000000000001 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
-			children = (
-				A20000000000000000000008 /* Base */,
-			);
+			children = (A20000000000000000000008 /* Base */);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		A30000000000000000000002 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (A20000000000000000000009 /* Base */);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -218,17 +251,10 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.imagefeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -248,17 +274,10 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.imagefeed;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -270,19 +289,13 @@
 /* Begin XCConfigurationList section */
 		A70000000000000000000001 /* Build configuration list for PBXProject "ImageFeed" */ = {
 			isa = XCConfigurationList;
-			buildConfigurations = (
-				A80000000000000000000001 /* Debug */,
-				A80000000000000000000002 /* Release */,
-			);
+			buildConfigurations = (A80000000000000000000001 /* Debug */, A80000000000000000000002 /* Release */);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		A70000000000000000000002 /* Build configuration list for PBXNativeTarget "ImageFeed" */ = {
 			isa = XCConfigurationList;
-			buildConfigurations = (
-				A80000000000000000000003 /* Debug */,
-				A80000000000000000000004 /* Release */,
-			);
+			buildConfigurations = (A80000000000000000000003 /* Debug */, A80000000000000000000004 /* Release */);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};

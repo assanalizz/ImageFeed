@@ -12,10 +12,22 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let feedViewController = ImagesListViewController()
 
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = feedViewController
-        window.makeKeyAndVisible()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let profileViewController = storyboard.instantiateViewController(
+            withIdentifier: "ProfileViewController"
+        ) as? ProfileViewController else {
+            return
+        }
 
+        let tabBarController = ImageFeedTabBarController()
+        tabBarController.viewControllers = [feedViewController, profileViewController]
+        tabBarController.selectedIndex = 0
+        tabBarController.overrideUserInterfaceStyle = .dark
+
+        let window = UIWindow(windowScene: windowScene)
+        window.rootViewController = tabBarController
+        window.overrideUserInterfaceStyle = .dark
+        window.makeKeyAndVisible()
         self.window = window
     }
 }
