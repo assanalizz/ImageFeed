@@ -17,17 +17,34 @@ final class AuthViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .imageFeedBackground
 
-        logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoImageView.image = UIImage(named: "LaunchLogo")
-        logoImageView.contentMode = .scaleAspectFit
+        logoImageView.translatesAutoresizingMaskIntoConstraints =
+            false
 
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
-        loginButton.setTitle("Войти", for: .normal)
-        loginButton.setTitleColor(.black, for: .normal)
-        loginButton.titleLabel?.font = .systemFont(
-            ofSize: 17,
-            weight: .semibold
+        logoImageView.image =
+            UIImage(named: "LaunchLogo")
+
+        logoImageView.contentMode =
+            .scaleAspectFit
+
+        loginButton.translatesAutoresizingMaskIntoConstraints =
+            false
+
+        loginButton.setTitle(
+            "Войти",
+            for: .normal
         )
+
+        loginButton.setTitleColor(
+            .black,
+            for: .normal
+        )
+
+        loginButton.titleLabel?.font =
+            .systemFont(
+                ofSize: 17,
+                weight: .semibold
+            )
+
         loginButton.backgroundColor = .white
         loginButton.layer.cornerRadius = 16
 
@@ -44,13 +61,16 @@ final class AuthViewController: UIViewController {
             logoImageView.centerXAnchor.constraint(
                 equalTo: view.centerXAnchor
             ),
+
             logoImageView.centerYAnchor.constraint(
                 equalTo: view.centerYAnchor,
                 constant: -55
             ),
+
             logoImageView.widthAnchor.constraint(
                 equalToConstant: 100
             ),
+
             logoImageView.heightAnchor.constraint(
                 equalToConstant: 100
             ),
@@ -59,14 +79,18 @@ final class AuthViewController: UIViewController {
                 equalTo: view.leadingAnchor,
                 constant: 16
             ),
+
             loginButton.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor,
                 constant: -16
             ),
+
             loginButton.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                equalTo:
+                    view.safeAreaLayoutGuide.bottomAnchor,
                 constant: -24
             ),
+
             loginButton.heightAnchor.constraint(
                 equalToConstant: 48
             )
@@ -74,51 +98,18 @@ final class AuthViewController: UIViewController {
     }
 
     @objc private func didTapLoginButton() {
-        let webViewViewController = WebViewViewController()
+        let webViewViewController =
+            WebViewViewController()
 
         webViewViewController.delegate = self
-        webViewViewController.modalPresentationStyle = .fullScreen
+
+        webViewViewController
+            .modalPresentationStyle = .fullScreen
 
         present(
             webViewViewController,
             animated: true
         )
-    }
-
-    private func showGallery() {
-        let feedViewController = ImagesListViewController()
-
-        let storyboard = UIStoryboard(
-            name: "Main",
-            bundle: nil
-        )
-
-        guard let profileViewController =
-            storyboard.instantiateViewController(
-                withIdentifier: "ProfileViewController"
-            ) as? ProfileViewController else {
-
-            print("AuthViewController: ProfileViewController not found")
-            return
-        }
-
-        let tabBarController = ImageFeedTabBarController()
-
-        tabBarController.viewControllers = [
-            feedViewController,
-            profileViewController
-        ]
-
-        tabBarController.selectedIndex = 0
-        tabBarController.overrideUserInterfaceStyle = .dark
-
-        guard let window = view.window else {
-            print("AuthViewController: window is nil")
-            return
-        }
-
-        window.rootViewController = tabBarController
-        window.makeKeyAndVisible()
     }
 
     private func showAuthError() {
@@ -130,38 +121,78 @@ final class AuthViewController: UIViewController {
 
         alert.addAction(
             UIAlertAction(
-                title: "OK",
+                title: "Ок",
                 style: .default
             )
         )
 
-        present(alert, animated: true)
+        present(
+            alert,
+            animated: true
+        )
+    }
+
+    private func switchToSplash() {
+        guard let window = view.window else {
+            print(
+                "[AuthViewController.switchToSplash]: window is nil"
+            )
+            return
+        }
+
+        window.rootViewController =
+            SplashViewController()
+
+        window.makeKeyAndVisible()
     }
 }
 
-extension AuthViewController: WebViewViewControllerDelegate {
+extension AuthViewController:
+    WebViewViewControllerDelegate {
 
     func webViewViewController(
         _ vc: WebViewViewController,
         didAuthenticateWithCode code: String
     ) {
-        vc.dismiss(animated: true) { [weak self] in
+        vc.dismiss(
+            animated: true
+        ) { [weak self] in
+
+            guard let self else {
+                return
+            }
+
+            UIBlockingProgressHUD.show()
 
             OAuth2Service.shared.fetchAuthToken(
                 code: code
-            ) { result in
+            ) { [weak self] result in
+
+                guard let self else {
+                    UIBlockingProgressHUD.dismiss()
+                    return
+                }
+
+                UIBlockingProgressHUD.dismiss()
 
                 switch result {
 
                 case .success(let token):
-                    OAuth2TokenStorage.shared.token = token
-                    self?.showGallery()
+
+                    OAuth2TokenStorage.shared.token =
+                        token
+
+                    // Splash сам загрузит
+                    // профиль и аватар.
+                    self.switchToSplash()
 
                 case .failure(let error):
+
                     print(
-                        "AuthViewController OAuth error: \(error)"
+                        "[AuthViewController.fetchAuthToken]: \(error)"
                     )
-                    self?.showAuthError()
+
+                    self.showAuthError()
                 }
             }
         }

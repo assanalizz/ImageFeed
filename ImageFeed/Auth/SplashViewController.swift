@@ -16,11 +16,7 @@ final class SplashViewController: UIViewController {
         guard !didRoute else { return }
         didRoute = true
 
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.35
-        ) { [weak self] in
-            self?.routeFromSplash()
-        }
+        routeFromSplash()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -40,12 +36,15 @@ final class SplashViewController: UIViewController {
             logoImageView.centerXAnchor.constraint(
                 equalTo: view.centerXAnchor
             ),
+
             logoImageView.centerYAnchor.constraint(
                 equalTo: view.centerYAnchor
             ),
+
             logoImageView.widthAnchor.constraint(
                 equalToConstant: 100
             ),
+
             logoImageView.heightAnchor.constraint(
                 equalToConstant: 100
             )
@@ -53,27 +52,85 @@ final class SplashViewController: UIViewController {
     }
 
     private func routeFromSplash() {
-        if OAuth2TokenStorage.shared.token == nil {
+        guard let token =
+                OAuth2TokenStorage.shared.token else {
+
             showAuth()
-        } else {
-            showGallery()
+            return
         }
+
+        fetchProfile(token: token)
+    }
+
+    private func fetchProfile(token: String) {
+        ProfileService.shared.fetchProfile(
+            token: token
+        ) { [weak self] result in
+
+            switch result {
+
+            case .success(let profile):
+
+                self?.fetchProfileImage(
+                    username: profile.username
+                )
+
+            case .failure(let error):
+
+                print(
+                    "[SplashViewController.fetchProfile]: \(error)"
+                )
+
+                OAuth2TokenStorage.shared.token = nil
+                self?.showAuth()
+            }
+        }
+    }
+
+    private func fetchProfileImage(
+        username: String
+    ) {
+        ProfileImageService.shared
+            .fetchProfileImageURL(
+                username: username
+            ) { [weak self] result in
+
+                switch result {
+
+                case .success:
+                    self?.showGallery()
+
+                case .failure(let error):
+
+                    print(
+                        "[SplashViewController.fetchProfileImage]: \(error)"
+                    )
+
+                    // Профиль уже загрузился,
+                    // поэтому даже при ошибке аватарки
+                    // можем открыть приложение.
+                    self?.showGallery()
+                }
+            }
     }
 
     private func showAuth() {
         guard let window = view.window else {
-            print("SplashViewController: window is nil")
+            print(
+                "[SplashViewController.showAuth]: window is nil"
+            )
             return
         }
 
-        let authViewController = AuthViewController()
+        window.rootViewController =
+            AuthViewController()
 
-        window.rootViewController = authViewController
         window.makeKeyAndVisible()
     }
 
     private func showGallery() {
-        let feedViewController = ImagesListViewController()
+        let feedViewController =
+            ImagesListViewController()
 
         let storyboard = UIStoryboard(
             name: "Main",
@@ -81,17 +138,19 @@ final class SplashViewController: UIViewController {
         )
 
         guard let profileViewController =
-            storyboard.instantiateViewController(
-                withIdentifier: "ProfileViewController"
-            ) as? ProfileViewController else {
+                storyboard.instantiateViewController(
+                    withIdentifier:
+                        "ProfileViewController"
+                ) as? ProfileViewController else {
 
             print(
-                "SplashViewController: ProfileViewController not found"
+                "[SplashViewController.showGallery]: ProfileViewController not found"
             )
             return
         }
 
-        let tabBarController = ImageFeedTabBarController()
+        let tabBarController =
+            ImageFeedTabBarController()
 
         tabBarController.viewControllers = [
             feedViewController,
@@ -99,14 +158,19 @@ final class SplashViewController: UIViewController {
         ]
 
         tabBarController.selectedIndex = 0
-        tabBarController.overrideUserInterfaceStyle = .dark
+        tabBarController.overrideUserInterfaceStyle =
+            .dark
 
         guard let window = view.window else {
-            print("SplashViewController: window is nil")
+            print(
+                "[SplashViewController.showGallery]: window is nil"
+            )
             return
         }
 
-        window.rootViewController = tabBarController
+        window.rootViewController =
+            tabBarController
+
         window.makeKeyAndVisible()
     }
 }
