@@ -16,6 +16,22 @@ final class ImagesListCell: UITableViewCell {
 
 
 
+    private lazy var dateFormatter: DateFormatter = {
+
+        let formatter = DateFormatter()
+
+        formatter.locale =
+            Locale(identifier: "ru_RU")
+
+        formatter.dateFormat =
+            "d MMMM yyyy"
+
+        return formatter
+
+    }()
+
+
+
     var onLikeButtonTapped: (() -> Void)?
 
 
@@ -104,11 +120,17 @@ final class ImagesListCell: UITableViewCell {
 
 
 
-        contentView.addSubview(photoImageView)
+        contentView.addSubview(
+            photoImageView
+        )
 
-        contentView.addSubview(dateLabel)
+        contentView.addSubview(
+            dateLabel
+        )
 
-        contentView.addSubview(likeButton)
+        contentView.addSubview(
+            likeButton
+        )
 
 
 
@@ -202,25 +224,13 @@ final class ImagesListCell: UITableViewCell {
         )
 
 
+
         if let date =
             photo.createdAt {
 
 
-            let formatter =
-            DateFormatter()
-
-
-            formatter.locale =
-                Locale(identifier: "ru_RU")
-
-
-            formatter.dateFormat =
-                "d MMMM yyyy"
-
-
-
             dateLabel.text =
-                formatter.string(
+                dateFormatter.string(
                     from:
                         date
                 )
