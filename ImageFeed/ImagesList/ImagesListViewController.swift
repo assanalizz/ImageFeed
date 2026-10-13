@@ -127,10 +127,8 @@ extension ImagesListViewController: UITableViewDataSource {
 
         guard let cell =
                 tableView.dequeueReusableCell(
-                    withIdentifier:
-                        ImagesListCell.reuseIdentifier,
-                    for:
-                        indexPath
+                    withIdentifier: ImagesListCell.reuseIdentifier,
+                    for: indexPath
                 ) as? ImagesListCell
 
         else {
@@ -269,15 +267,20 @@ extension ImagesListViewController: UITableViewDelegate {
 
 
 
-        let controller =
-        UIStoryboard(
+        let storyboard = UIStoryboard(
             name: "Main",
             bundle: nil
         )
-        .instantiateViewController(
-            withIdentifier:
-                "SingleImageViewController"
-        ) as! SingleImageViewController
+
+
+        guard let controller =
+                storyboard.instantiateViewController(
+                    withIdentifier: "SingleImageViewController"
+                ) as? SingleImageViewController
+
+        else {
+            return
+        }
 
 
 

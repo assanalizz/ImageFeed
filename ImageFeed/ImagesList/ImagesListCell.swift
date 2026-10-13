@@ -4,7 +4,6 @@ import Kingfisher
 
 final class ImagesListCell: UITableViewCell {
 
-
     static let reuseIdentifier = "ImagesListCell"
 
 
@@ -15,21 +14,12 @@ final class ImagesListCell: UITableViewCell {
     private let likeButton = UIButton(type: .system)
 
 
-
-    private lazy var dateFormatter: DateFormatter = {
-
+    private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-
-        formatter.locale =
-            Locale(identifier: "ru_RU")
-
-        formatter.dateFormat =
-            "d MMMM yyyy"
-
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateFormat = "d MMMM yyyy"
         return formatter
-
     }()
-
 
 
     var onLikeButtonTapped: (() -> Void)?
@@ -52,7 +42,6 @@ final class ImagesListCell: UITableViewCell {
 
 
     required init?(coder: NSCoder) {
-
         fatalError(
             "init(coder:) has not been implemented"
         )
@@ -63,147 +52,97 @@ final class ImagesListCell: UITableViewCell {
 
     private func setupUI() {
 
-
         backgroundColor = .clear
 
 
+        photoImageView.translatesAutoresizingMaskIntoConstraints = false
 
-        photoImageView.translatesAutoresizingMaskIntoConstraints =
-            false
+        photoImageView.contentMode = .scaleAspectFill
 
+        photoImageView.clipsToBounds = true
 
-        photoImageView.contentMode =
-            .scaleAspectFill
-
-
-        photoImageView.clipsToBounds =
-            true
-
-
-        photoImageView.layer.cornerRadius =
-            16
+        photoImageView.layer.cornerRadius = 16
 
 
 
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
 
+        dateLabel.textColor = .white
 
-        dateLabel.translatesAutoresizingMaskIntoConstraints =
-            false
-
-
-        dateLabel.textColor =
-            .white
-
-
-        dateLabel.font =
-            .systemFont(
-                ofSize: 13
-            )
+        dateLabel.font = .systemFont(
+            ofSize: 13
+        )
 
 
 
-
-
-        likeButton.translatesAutoresizingMaskIntoConstraints =
-            false
-
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
 
         likeButton.addTarget(
             self,
-            action:
-                #selector(
-                    likeButtonTapped
-                ),
-            for:
-                .touchUpInside
+            action: #selector(likeButtonTapped),
+            for: .touchUpInside
         )
 
 
 
-        contentView.addSubview(
-            photoImageView
-        )
+        contentView.addSubview(photoImageView)
 
-        contentView.addSubview(
-            dateLabel
-        )
+        contentView.addSubview(dateLabel)
 
-        contentView.addSubview(
-            likeButton
-        )
-
-
+        contentView.addSubview(likeButton)
 
 
 
         NSLayoutConstraint.activate([
 
 
-
             photoImageView.topAnchor.constraint(
-                equalTo:
-                    contentView.topAnchor,
-                constant:
-                    4
+                equalTo: contentView.topAnchor,
+                constant: 4
             ),
 
 
             photoImageView.leadingAnchor.constraint(
-                equalTo:
-                    contentView.leadingAnchor,
-                constant:
-                    16
+                equalTo: contentView.leadingAnchor,
+                constant: 16
             ),
 
 
             photoImageView.trailingAnchor.constraint(
-                equalTo:
-                    contentView.trailingAnchor,
-                constant:
-                    -16
+                equalTo: contentView.trailingAnchor,
+                constant: -16
             ),
 
 
             photoImageView.bottomAnchor.constraint(
-                equalTo:
-                    contentView.bottomAnchor,
-                constant:
-                    -4
+                equalTo: contentView.bottomAnchor,
+                constant: -4
             ),
-
 
 
 
             likeButton.trailingAnchor.constraint(
-                equalTo:
-                    photoImageView.trailingAnchor,
-                constant:
-                    -12
+                equalTo: photoImageView.trailingAnchor,
+                constant: -12
             ),
 
 
             likeButton.topAnchor.constraint(
-                equalTo:
-                    photoImageView.topAnchor,
-                constant:
-                    12
+                equalTo: photoImageView.topAnchor,
+                constant: 12
             ),
 
 
 
             dateLabel.leadingAnchor.constraint(
-                equalTo:
-                    photoImageView.leadingAnchor,
-                constant:
-                    8
+                equalTo: photoImageView.leadingAnchor,
+                constant: 8
             ),
 
 
             dateLabel.bottomAnchor.constraint(
-                equalTo:
-                    photoImageView.bottomAnchor,
-                constant:
-                    -8
+                equalTo: photoImageView.bottomAnchor,
+                constant: -8
             )
 
         ])
@@ -219,28 +158,22 @@ final class ImagesListCell: UITableViewCell {
 
 
         photoImageView.kf.setImage(
-            with:
-                photo.imageURL
+            with: photo.imageURL
         )
 
 
-
-        if let date =
-            photo.createdAt {
-
+        if let date = photo.createdAt {
 
             dateLabel.text =
-                dateFormatter.string(
-                    from:
-                        date
+                Self.dateFormatter.string(
+                    from: date
                 )
 
         } else {
 
-            dateLabel.text =
-                ""
-        }
+            dateLabel.text = ""
 
+        }
 
 
         setIsLiked(
@@ -259,8 +192,7 @@ final class ImagesListCell: UITableViewCell {
     ) {
 
 
-        let image =
-        UIImage(
+        let image = UIImage(
             systemName:
                 liked
                 ?
@@ -272,10 +204,8 @@ final class ImagesListCell: UITableViewCell {
 
         likeButton.setImage(
             image,
-            for:
-                .normal
+            for: .normal
         )
-
 
 
         likeButton.tintColor =
@@ -307,12 +237,9 @@ final class ImagesListCell: UITableViewCell {
         super.prepareForReuse()
 
 
-        photoImageView.image =
-            nil
+        photoImageView.image = nil
 
-
-        onLikeButtonTapped =
-            nil
+        onLikeButtonTapped = nil
     }
 
 }

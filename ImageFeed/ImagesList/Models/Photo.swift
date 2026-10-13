@@ -10,35 +10,43 @@ struct Photo {
     var isLiked: Bool
 
 
-    init(photoResult: PhotoResult) {
+    private static let iso8601Formatter = ISO8601DateFormatter()
+
+
+    init?(photoResult: PhotoResult) {
+
+        guard let imageURL = URL(
+            string: photoResult.urls.regular
+        ),
+        let fullImageURL = URL(
+            string: photoResult.urls.full
+        ) else {
+            return nil
+        }
+
 
         id = photoResult.id
+
 
         size = CGSize(
             width: photoResult.width,
             height: photoResult.height
         )
 
-        createdAt =
-        ISO8601DateFormatter()
-            .date(
-                from: photoResult.createdAt ?? ""
+
+        if let createdAtString = photoResult.createdAt {
+            createdAt = Photo.iso8601Formatter.date(
+                from: createdAtString
             )
+        } else {
+            createdAt = nil
+        }
 
 
-        imageURL =
-        URL(
-            string: photoResult.urls.regular
-        )!
+        self.imageURL = imageURL
+        self.fullImageURL = fullImageURL
 
 
-        fullImageURL =
-        URL(
-            string: photoResult.urls.full
-        )!
-
-
-        isLiked =
-        photoResult.likedByUser
+        isLiked = photoResult.likedByUser
     }
 }

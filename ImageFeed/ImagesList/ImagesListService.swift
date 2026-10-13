@@ -84,10 +84,8 @@ final class ImagesListService {
             case .success(let photoResults):
 
 
-                let newPhotos = photoResults.map {
-                    Photo(
-                        photoResult: $0
-                    )
+                let newPhotos = photoResults.compactMap {
+                    Photo(photoResult: $0)
                 }
 
 
