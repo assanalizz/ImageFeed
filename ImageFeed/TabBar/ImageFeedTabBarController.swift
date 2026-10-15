@@ -1,10 +1,14 @@
 import UIKit
 
-final class ImageFeedTabBarController: UITabBarController {
+final class ImageFeedTabBarController:
+    UITabBarController {
 
     private let customTabBar = UIView()
-    private let feedButton = UIButton(type: .system)
-    private let profileButton = UIButton(type: .system)
+    private let feedButton =
+        UIButton(type: .system)
+
+    private let profileButton =
+        UIButton(type: .system)
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,7 +27,6 @@ final class ImageFeedTabBarController: UITabBarController {
     }
 
     private func configureViewControllersIfNeeded() {
-
         if let viewControllers,
            !viewControllers.isEmpty {
             return
@@ -39,9 +42,10 @@ final class ImageFeedTabBarController: UITabBarController {
 
         guard let profileViewController =
                 storyboard.instantiateViewController(
-                    withIdentifier: "ProfileViewController"
-                ) as? ProfileViewController else {
-
+                    withIdentifier:
+                        "ProfileViewController"
+                ) as? ProfileViewController
+        else {
             print(
                 "[ImageFeedTabBarController]: ProfileViewController not found"
             )
@@ -55,7 +59,6 @@ final class ImageFeedTabBarController: UITabBarController {
     }
 
     private func setupCustomTabBar() {
-
         customTabBar.translatesAutoresizingMaskIntoConstraints =
             false
 
@@ -68,13 +71,21 @@ final class ImageFeedTabBarController: UITabBarController {
 
         configureButton(
             feedButton,
-            systemName: "photo.on.rectangle"
+            systemName:
+                "photo.on.rectangle"
         )
 
         configureButton(
             profileButton,
-            systemName: "person.crop.circle"
+            systemName:
+                "person.crop.circle"
         )
+
+        feedButton.accessibilityIdentifier =
+            "FeedTabButton"
+
+        profileButton.accessibilityIdentifier =
+            "ProfileTabButton"
 
         feedButton.addTarget(
             self,
@@ -101,41 +112,38 @@ final class ImageFeedTabBarController: UITabBarController {
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
 
-        customTabBar.addSubview(stackView)
+        customTabBar.addSubview(
+            stackView
+        )
 
         NSLayoutConstraint.activate([
             customTabBar.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor
             ),
-
             customTabBar.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor
             ),
-
             customTabBar.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor
             ),
-
             customTabBar.topAnchor.constraint(
                 equalTo:
                     view.safeAreaLayoutGuide.bottomAnchor,
                 constant: -52
             ),
-
             stackView.topAnchor.constraint(
                 equalTo: customTabBar.topAnchor
             ),
-
             stackView.leadingAnchor.constraint(
-                equalTo: customTabBar.leadingAnchor,
+                equalTo:
+                    customTabBar.leadingAnchor,
                 constant: 46
             ),
-
             stackView.trailingAnchor.constraint(
-                equalTo: customTabBar.trailingAnchor,
+                equalTo:
+                    customTabBar.trailingAnchor,
                 constant: -46
             ),
-
             stackView.bottomAnchor.constraint(
                 equalTo:
                     view.safeAreaLayoutGuide.bottomAnchor
@@ -143,7 +151,8 @@ final class ImageFeedTabBarController: UITabBarController {
         ])
 
         viewControllers?.forEach {
-            $0.additionalSafeAreaInsets.bottom = 52
+            $0.additionalSafeAreaInsets.bottom =
+                52
         }
     }
 
@@ -151,7 +160,6 @@ final class ImageFeedTabBarController: UITabBarController {
         _ button: UIButton,
         systemName: String
     ) {
-
         let configuration =
             UIImage.SymbolConfiguration(
                 pointSize: 22,
@@ -161,35 +169,41 @@ final class ImageFeedTabBarController: UITabBarController {
         button.setImage(
             UIImage(
                 systemName: systemName,
-                withConfiguration: configuration
+                withConfiguration:
+                    configuration
             ),
             for: .normal
         )
 
         button.tintColor =
-            UIColor.white.withAlphaComponent(0.45)
+            UIColor.white.withAlphaComponent(
+                0.45
+            )
     }
 
-    @objc private func didTapFeed() {
+    @objc
+    private func didTapFeed() {
         selectedIndex = 0
         updateSelection()
     }
 
-    @objc private func didTapProfile() {
+    @objc
+    private func didTapProfile() {
         selectedIndex = 1
         updateSelection()
     }
 
     private func updateSelection() {
-
         feedButton.tintColor =
             selectedIndex == 0
             ? .white
-            : UIColor.white.withAlphaComponent(0.45)
+            : UIColor.white
+                .withAlphaComponent(0.45)
 
         profileButton.tintColor =
             selectedIndex == 1
             ? .white
-            : UIColor.white.withAlphaComponent(0.45)
+            : UIColor.white
+                .withAlphaComponent(0.45)
     }
 }

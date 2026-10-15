@@ -106,9 +106,7 @@ final class SplashViewController: UIViewController {
                         "[SplashViewController.fetchProfileImage]: \(error)"
                     )
 
-                    // Профиль уже загрузился,
-                    // поэтому даже при ошибке аватарки
-                    // можем открыть приложение.
+
                     self?.showGallery()
                 }
             }

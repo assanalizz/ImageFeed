@@ -1,0 +1,41 @@
+{
+  "configurations" : [
+    {
+      "id" : "B2B9664F-EDFC-4917-8999-A9C5D9FFEBB4",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "environmentVariableEntries" : [
+      {
+        "key" : "TEST_USERNAME",
+        "value" : "asanalizhusuppio@gmail.com"
+      },
+      {
+        "key" : "TEST_PASSWORD",
+        "value" : "Asanali1995"
+      }
+    ],
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ImageFeed.xcodeproj",
+        "identifier" : "03148025307FB2E4005E3913",
+        "name" : "ImageFeedTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:ImageFeed.xcodeproj",
+        "identifier" : "0314803F30802939005E3913",
+        "name" : "ImageFeedUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
