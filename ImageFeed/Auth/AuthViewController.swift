@@ -17,36 +17,20 @@ final class AuthViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .imageFeedBackground
 
-        logoImageView.translatesAutoresizingMaskIntoConstraints =
-            false
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
+        logoImageView.image = UIImage(named: "LaunchLogo")
+        logoImageView.contentMode = .scaleAspectFit
 
-        logoImageView.image =
-            UIImage(named: "LaunchLogo")
-
-        logoImageView.contentMode =
-            .scaleAspectFit
-
-        loginButton.translatesAutoresizingMaskIntoConstraints =
-            false
-
-        loginButton.setTitle(
-            "Войти",
-            for: .normal
+        loginButton.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.setTitle("Войти", for: .normal)
+        loginButton.setTitleColor(.black, for: .normal)
+        loginButton.titleLabel?.font = .systemFont(
+            ofSize: 17,
+            weight: .semibold
         )
-
-        loginButton.setTitleColor(
-            .black,
-            for: .normal
-        )
-
-        loginButton.titleLabel?.font =
-            .systemFont(
-                ofSize: 17,
-                weight: .semibold
-            )
-
         loginButton.backgroundColor = .white
         loginButton.layer.cornerRadius = 16
+        loginButton.accessibilityIdentifier = "Authenticate"
 
         loginButton.addTarget(
             self,
@@ -61,50 +45,41 @@ final class AuthViewController: UIViewController {
             logoImageView.centerXAnchor.constraint(
                 equalTo: view.centerXAnchor
             ),
-
             logoImageView.centerYAnchor.constraint(
                 equalTo: view.centerYAnchor,
                 constant: -55
             ),
-
             logoImageView.widthAnchor.constraint(
                 equalToConstant: 100
             ),
-
             logoImageView.heightAnchor.constraint(
                 equalToConstant: 100
             ),
-
             loginButton.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor,
                 constant: 16
             ),
-
             loginButton.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor,
                 constant: -16
             ),
-
             loginButton.bottomAnchor.constraint(
-                equalTo:
-                    view.safeAreaLayoutGuide.bottomAnchor,
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
                 constant: -24
             ),
-
             loginButton.heightAnchor.constraint(
                 equalToConstant: 48
             )
         ])
     }
 
-    @objc private func didTapLoginButton() {
+    @objc
+    private func didTapLoginButton() {
         let webViewViewController =
             WebViewViewController()
 
         webViewViewController.delegate = self
-
-        webViewViewController
-            .modalPresentationStyle = .fullScreen
+        webViewViewController.modalPresentationStyle = .fullScreen
 
         present(
             webViewViewController,
@@ -178,16 +153,12 @@ extension AuthViewController:
                 switch result {
 
                 case .success(let token):
-
                     OAuth2TokenStorage.shared.token =
                         token
 
-                    // Splash сам загрузит
-                    // профиль и аватар.
                     self.switchToSplash()
 
                 case .failure(let error):
-
                     print(
                         "[AuthViewController.fetchAuthToken]: \(error)"
                     )

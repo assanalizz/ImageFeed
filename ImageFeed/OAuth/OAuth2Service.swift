@@ -19,7 +19,6 @@ final class OAuth2Service {
         code: String,
         completion: @escaping (Result<String, Error>) -> Void
     ) {
-        // Повторный запрос с тем же code не запускаем
         if lastCode == code, task != nil {
             print(
                 "[OAuth2Service.fetchAuthToken]: duplicate code ignored"
@@ -27,7 +26,6 @@ final class OAuth2Service {
             return
         }
 
-        // Если пришёл новый code — старый запрос отменяем
         task?.cancel()
 
         guard let url = URL(
@@ -108,7 +106,6 @@ final class OAuth2Service {
                 return
             }
 
-            // Результат старого отменённого запроса игнорируем
             guard self.activeRequestID == requestID else {
                 return
             }
